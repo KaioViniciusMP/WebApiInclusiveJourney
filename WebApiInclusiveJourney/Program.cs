@@ -16,6 +16,7 @@ builder.Services.AddCors();
 builder.Services.AddDbContext<WebApiInclusiveJourneyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
 builder.Services.AddScoped<IAutenticacaoService, AutenticacaoService>();
+builder.Services.AddScoped<IPessoaService, PessoaService>();
 
 var app = builder.Build();
 

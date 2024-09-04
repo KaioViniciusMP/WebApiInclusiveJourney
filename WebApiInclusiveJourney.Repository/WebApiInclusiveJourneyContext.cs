@@ -13,11 +13,19 @@ namespace WebApiInclusiveJourney.Repository
         public WebApiInclusiveJourneyContext(DbContextOptions<WebApiInclusiveJourneyContext> options) : base(options) { }
 
         public DbSet<TabUsuario> tabUsuario { get; set; }
+        public DbSet<TabPessoa> tabPessoa { get; set; }
+        public DbSet<TabGenero> tabGenero { get; set; }
+        public DbSet<TabTipoDeficiencia> tabTipoDeficiencia { get; set; }
+        public DbSet<TabPessoaTipo> tabPessoaTipo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<TabUsuario>().ToTable("TabUsuario");
             modelBuilder.Entity<TabUsuario>();
+            modelBuilder.Entity<TabPessoa>();
+            modelBuilder.Entity<TabGenero>();
+            modelBuilder.Entity<TabTipoDeficiencia>();
+            modelBuilder.Entity<TabPessoaTipo>();
         }
     }
 }
