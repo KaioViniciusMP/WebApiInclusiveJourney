@@ -75,7 +75,26 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
-
+        public List<TabPessoaTipo> BuscarTipoPessoa()
+        {
+            var response = _context.tabPessoaTipo.ToList();
+            return response;
+        }
+        public List<TabTipoDeficiencia> BuscarDeficiencia()
+        {
+            var response = _context.tabTipoDeficiencia.ToList();
+            return response;
+        }
+        public List<TabPessoa> BuscarPessoas()
+        {
+            var response = _context.tabPessoa.ToList();
+            return response;
+        }
+        public List<TabGenero> BuscarGeneros()
+        {
+            var response = _context.tabGenero.ToList();
+            return response;
+        }
 
     }
 }
