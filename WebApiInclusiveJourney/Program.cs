@@ -17,6 +17,7 @@ builder.Services.AddDbContext<WebApiInclusiveJourneyContext>(options => options.
 
 builder.Services.AddScoped<IAutenticacaoService, AutenticacaoService>();
 builder.Services.AddScoped<IPessoaService, PessoaService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 var app = builder.Build();
 
