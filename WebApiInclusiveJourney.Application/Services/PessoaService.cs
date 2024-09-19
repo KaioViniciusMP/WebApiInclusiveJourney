@@ -95,6 +95,5 @@ namespace WebApiInclusiveJourney.Application.Services
             var response = _context.tabGenero.ToList();
             return response;
         }
-
     }
 }

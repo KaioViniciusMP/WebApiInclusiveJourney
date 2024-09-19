@@ -17,6 +17,7 @@ namespace WebApiInclusiveJourney.Repository
         public DbSet<TabGenero> tabGenero { get; set; }
         public DbSet<TabTipoDeficiencia> tabTipoDeficiencia { get; set; }
         public DbSet<TabPessoaTipo> tabPessoaTipo { get; set; }
+        public DbSet<TabLugar> tabLugar { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +27,7 @@ namespace WebApiInclusiveJourney.Repository
             modelBuilder.Entity<TabGenero>();
             modelBuilder.Entity<TabTipoDeficiencia>();
             modelBuilder.Entity<TabPessoaTipo>();
+            modelBuilder.Entity<TabLugar>();
         }
     }
 }
