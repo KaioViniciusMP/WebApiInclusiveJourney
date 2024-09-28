@@ -20,5 +20,6 @@ namespace WebApiInclusiveJourney.Application.DTO.Request
         public string Cep { get; set; }
         public string Uf { get; set; }
         public int PessoaTipoCodigo { get; set; }
+        public int usuarioCodigo { get; set; }
     }
 }

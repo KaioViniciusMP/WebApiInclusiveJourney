@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebApiInclusiveJourney.Application.DTO.Request;
+using WebApiInclusiveJourney.Application.DTO.Response;
 using WebApiInclusiveJourney.Application.IServices;
 using WebApiInclusiveJourney.Repository;
 using WebApiInclusiveJourney.Repository.Models;
@@ -17,11 +18,13 @@ namespace WebApiInclusiveJourney.Application.Services
         {
             _context = context;
         }
-        public bool CadastrarUsuario(UsuarioRequest request)
+        public CadastrarUsuarioResponse CadastrarUsuario(UsuarioRequest request)
         {
             try
             {
                 TabUsuario objUsuario = new TabUsuario();
+                CadastrarUsuarioResponse objUsuarioResponse = new CadastrarUsuarioResponse();
+
                 objUsuario.nome = request.nome;
                 objUsuario.usuario = request.usuario;
                 objUsuario.senha = request.senha;
@@ -29,11 +32,13 @@ namespace WebApiInclusiveJourney.Application.Services
                 _context.tabUsuario.Add(objUsuario);
                 _context.SaveChanges();
 
-                return true;
+                objUsuarioResponse.usuarioCodigo = objUsuario.codigo;
+
+                return objUsuarioResponse;
             }
             catch (Exception )
             {
-                return false;
+                return null;
             }
             
         }

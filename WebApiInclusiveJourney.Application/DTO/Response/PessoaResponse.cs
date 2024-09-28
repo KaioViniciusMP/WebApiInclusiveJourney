@@ -21,5 +21,6 @@ namespace WebApiInclusiveJourney.Application.DTO.Response
         public string Uf { get; set; }
         public string PessoaTipo { get; set; } 
         public string TipoDeficiencia { get; set; }
+        public int usuarioCodigo { get; set; }
     }
 }

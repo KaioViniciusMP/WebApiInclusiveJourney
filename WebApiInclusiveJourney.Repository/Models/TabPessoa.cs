@@ -35,5 +35,6 @@ namespace WebApiInclusiveJourney.Repository.Models
         public string Uf { get; set; }
 
         public int PessoaTipoCodigo { get; set; }
+        public int usuarioCodigo { get; set; }
     }
 }

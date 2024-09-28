@@ -36,7 +36,8 @@ namespace WebApiInclusiveJourney.Application.Services
                     PessoaTipoCodigo = request.PessoaTipoCodigo,
                     TipoDeficienciaCodigo = request.TipoDeficienciaCodigo,
                     Uf = request.Uf,
-                    Rua = request.Rua
+                    Rua = request.Rua,
+                    usuarioCodigo = request.usuarioCodigo
                 };
 
                 _context.tabPessoa.Add(pessoa);
@@ -65,7 +66,8 @@ namespace WebApiInclusiveJourney.Application.Services
                     Cep = pessoa.Cep,
                     Uf = pessoa.Uf,
                     PessoaTipo = pessoaTipo, 
-                    TipoDeficiencia = tipoDeficiencia 
+                    TipoDeficiencia = tipoDeficiencia,
+                    usuarioCodigo = request.usuarioCodigo
                 };
 
                 return response;

@@ -18,10 +18,10 @@ namespace WebApiInclusiveJourney.Controllers
         public IActionResult CadastrarUsuario([FromBody] UsuarioRequest request)
         {
             var resposta = _usuarioService.CadastrarUsuario(request);
-            if (resposta == false)
+            if (resposta.usuarioCodigo == 0)
                 return BadRequest();
             else
-                return Ok();
+                return Ok(resposta);
         }
     }
 }
