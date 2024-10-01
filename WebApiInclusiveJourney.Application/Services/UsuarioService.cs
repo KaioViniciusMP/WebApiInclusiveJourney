@@ -25,6 +25,12 @@ namespace WebApiInclusiveJourney.Application.Services
                 TabUsuario objUsuario = new TabUsuario();
                 CadastrarUsuarioResponse objUsuarioResponse = new CadastrarUsuarioResponse();
 
+                if(string.IsNullOrEmpty(request.nome) || string.IsNullOrEmpty(request.usuario) || string.IsNullOrEmpty(request.senha))
+                {
+                    objUsuarioResponse.usuarioCodigo = 0;
+                    return objUsuarioResponse;
+                }
+
                 objUsuario.nome = request.nome;
                 objUsuario.usuario = request.usuario;
                 objUsuario.senha = request.senha;
@@ -40,8 +46,6 @@ namespace WebApiInclusiveJourney.Application.Services
             {
                 return null;
             }
-            
         }
-
     }
 }
