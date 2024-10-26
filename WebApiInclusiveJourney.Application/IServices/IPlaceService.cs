@@ -9,10 +9,14 @@ using WebApiInclusiveJourney.Repository.Models;
 
 namespace WebApiInclusiveJourney.Application.IServices
 {
-    public interface ILugarService
+    public interface IPlaceService
     {
-        bool InserirLugar(LugarRequest request);
-        List<LugarResponse> BuscarLugares();
-        List<LugarResponse> BuscarLugaresPorZona(BuscarLugaresPorZonaRequest request);
+        List<CategoriesResponse> GetCategories();
+
+        #region
+        //bool InserirLugar(LugarRequest request);
+        //List<LugarResponse> BuscarLugares();
+        //List<LugarResponse> BuscarLugaresPorZona(BuscarLugaresPorZonaRequest request);
+        #endregion
     }
 }

@@ -20,10 +20,16 @@ namespace WebApiInclusiveJourney.Repository
         public DbSet<TabLugar> tabLugar { get; set; }
         public DbSet<TabPerson> tabPerson { get; set; }
         public DbSet<TabComments> tabComments { get; set; }
+        public DbSet<TabZone> tabZone { get; set; }
+        public DbSet<TabCategories> tabCategories { get; set; }
+        public DbSet<TabPlaces> tabPlaces { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<TabUsuario>().ToTable("TabUsuario");
+            modelBuilder.Entity<TabPlaces>();
+            modelBuilder.Entity<TabZone>();
+            modelBuilder.Entity<TabCategories>();
             modelBuilder.Entity<TabPerson>();
             modelBuilder.Entity<TabComments>();
             modelBuilder.Entity<TabUsuario>();
