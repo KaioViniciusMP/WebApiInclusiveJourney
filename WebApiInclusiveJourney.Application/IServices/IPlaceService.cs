@@ -15,6 +15,7 @@ namespace WebApiInclusiveJourney.Application.IServices
         List<ZonesResponse> GetZones();
         List<PlacesResponse> GetPlacesForZones(int zoneCode);
         List<PlacesResponse> GetPlacesForCategories(int categorieCode);
+        bool RegisterPlace(RequestPlace request);
 
         #region
         //bool InserirLugar(LugarRequest request);

@@ -124,6 +124,37 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
+        public bool RegisterPlace(RequestPlace request)
+        {
+            try
+            {
+                TabPlaces tabPlaces = new TabPlaces
+                {
+                    Cep = request.Cep,
+                    City = request.City,
+                    Street = request.Street,
+                    Neighborhood = request.Neighborhood,
+                    Complement = request.Complement,
+                    NameLocal = request.NameLocal,
+                    LocalAssessment = request.LocalAssessment,
+                    State = request.State,
+                    ZoneCode = request.ZoneCode,
+                    Description = request.Description,
+                    NumberHome = request.NumberHome,
+                    OpeningHours = request.OpeningHours,
+                    TypeAcessibility = request.TypeAcessibility,
+                    ZoneCategorie = request.ZoneCategorie
+                };
+
+                _ctx.tabPlaces.Add(tabPlaces); 
+                _ctx.SaveChanges(); 
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
         #region
         //public bool InserirLugar(LugarRequest request)
