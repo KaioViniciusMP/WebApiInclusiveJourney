@@ -9,12 +9,15 @@ using WebApiInclusiveJourney.Repository.Models;
 
 namespace WebApiInclusiveJourney.Application.IServices
 {
-    public interface IPessoaService
+    public interface IPersonService
     {
-        public PessoaResponse CadastrarPessoa(PessoaRequest request);
-        List<TabPessoaTipo> BuscarTipoPessoa();
-        List<TabTipoDeficiencia> BuscarDeficiencia();
-        List<TabPessoa> BuscarPessoas();
-        List<TabGenero> BuscarGeneros();
+        PersonResponse RegisterPerson(PersonRequest request);
+
+        #region
+        //List<TabPessoaTipo> BuscarTipoPessoa();
+        //List<TabTipoDeficiencia> BuscarDeficiencia();
+        //List<TabPessoa> BuscarPessoas();
+        //List<TabGenero> BuscarGeneros();
+        #endregion
     }
 }

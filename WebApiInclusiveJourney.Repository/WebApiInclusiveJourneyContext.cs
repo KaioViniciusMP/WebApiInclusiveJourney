@@ -18,10 +18,12 @@ namespace WebApiInclusiveJourney.Repository
         public DbSet<TabTipoDeficiencia> tabTipoDeficiencia { get; set; }
         public DbSet<TabPessoaTipo> tabPessoaTipo { get; set; }
         public DbSet<TabLugar> tabLugar { get; set; }
+        public DbSet<TabPerson> tabPerson { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<TabUsuario>().ToTable("TabUsuario");
+            modelBuilder.Entity<TabPerson>();
             modelBuilder.Entity<TabUsuario>();
             modelBuilder.Entity<TabPessoa>();
             modelBuilder.Entity<TabGenero>();
