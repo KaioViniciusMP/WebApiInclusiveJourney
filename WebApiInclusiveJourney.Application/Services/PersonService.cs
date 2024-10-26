@@ -13,17 +13,17 @@ namespace WebApiInclusiveJourney.Application.Services
 {
     public class PersonService : IPersonService
     {
-        private readonly WebApiInclusiveJourneyContext _context;
+        private readonly WebApiInclusiveJourneyContext _ctx;
         public PersonService(WebApiInclusiveJourneyContext context)
         {
-            _context = context;
+            _ctx = context;
         }
 
         public PersonResponse RegisterPerson(PersonRequest request)
         {
             try
             {
-                var pessoa = new TabPerson()
+                var person = new TabPerson()
                 {
                     Email = request.Email,
                     Name = request.Name,
@@ -45,29 +45,29 @@ namespace WebApiInclusiveJourney.Application.Services
                     Avatar = request.Avatar
                 };
 
-                _context.tabPerson.Add(pessoa);
-                _context.SaveChanges();
+                _ctx.tabPerson.Add(person);
+                _ctx.SaveChanges();
 
                 var response = new PersonResponse
                 {
-                    Codigo = pessoa.Codigo,
-                    Email = pessoa.Email,
-                    Role = pessoa.Role,
-                    Name = pessoa.Name,
-                    FullName = pessoa.FullName,
-                    DateOfBirth = pessoa.DateOfBirth,
-                    Gender = pessoa.Gender,
-                    DisabilityType = pessoa.DisabilityType,
-                    PostalCode = pessoa.PostalCode,
-                    Street = pessoa.Street,
-                    AdditionalInfo = pessoa.AdditionalInfo,
-                    Neighborhood = pessoa.Neighborhood,
-                    City = pessoa.City,
-                    Number = pessoa.Number,
-                    State = pessoa.State,
-                    Username = pessoa.Username,
-                    UserDescription = pessoa.UserDescription,
-                    Avatar = pessoa.Avatar
+                    Codigo = person.Codigo,
+                    Email = person.Email,
+                    Role = person.Role,
+                    Name = person.Name,
+                    FullName = person.FullName,
+                    DateOfBirth = person.DateOfBirth,
+                    Gender = person.Gender,
+                    DisabilityType = person.DisabilityType,
+                    PostalCode = person.PostalCode,
+                    Street = person.Street,
+                    AdditionalInfo = person.AdditionalInfo,
+                    Neighborhood = person.Neighborhood,
+                    City = person.City,
+                    Number = person.Number,
+                    State = person.State,
+                    Username = person.Username,
+                    UserDescription = person.UserDescription,
+                    Avatar = person.Avatar
                 };
 
                 return response;
@@ -83,7 +83,7 @@ namespace WebApiInclusiveJourney.Application.Services
         {
             try
             {
-                var person = _context.tabPerson.Where(c => c.Codigo == personCode)
+                var person = _ctx.tabPerson.Where(c => c.Codigo == personCode)
                                                .Select(person => new PersonResponse
                                                {
                                                    Codigo = person.Codigo,
@@ -111,8 +111,66 @@ namespace WebApiInclusiveJourney.Application.Services
             }
             catch (Exception ex)
             {
-                // Log the exception (ex) if necessary
                 return null;
+            }
+        }
+
+        public PersonResponse UpdatePerson(PersonRequest request, int personCode)
+        {
+            try
+            {
+                var person = _ctx.tabPerson.Where(c => c.Codigo == personCode).FirstOrDefault();
+                if (person == null)
+                    return null;
+
+                person.Email = request.Email;
+                person.Name = request.Name;
+                person.Password = request.Password; 
+                person.Role = request.Role;
+                person.FullName = request.FullName;
+                person.DateOfBirth = request.DateOfBirth;
+                person.Gender = request.Gender;
+                person.DisabilityType = request.DisabilityType;
+                person.PostalCode = request.PostalCode;
+                person.Street = request.Street;
+                person.AdditionalInfo = request.AdditionalInfo;
+                person.Neighborhood = request.Neighborhood;
+                person.City = request.City;
+                person.Number = request.Number;
+                person.State = request.State;
+                person.Username = request.Username;
+                person.UserDescription = request.UserDescription;
+                person.Avatar = request.Avatar;
+
+                _ctx.SaveChanges();
+
+                var response = new PersonResponse
+                {
+                    Codigo = person.Codigo,
+                    Email = person.Email,
+                    Role = person.Role,
+                    Name = person.Name,
+                    FullName = person.FullName,
+                    DateOfBirth = person.DateOfBirth,
+                    Gender = person.Gender,
+                    DisabilityType = person.DisabilityType,
+                    PostalCode = person.PostalCode,
+                    Street = person.Street,
+                    AdditionalInfo = person.AdditionalInfo,
+                    Neighborhood = person.Neighborhood,
+                    City = person.City,
+                    Number = person.Number,
+                    State = person.State,
+                    Username = person.Username,
+                    UserDescription = person.UserDescription,
+                    Avatar = person.Avatar
+                };
+
+                return response; 
+            }
+            catch (Exception ex)
+            {
+                return null; 
             }
         }
 

@@ -34,6 +34,16 @@ namespace WebApiInclusiveJourney.Controllers
             }
             return Ok(resposta);
         }
+        [HttpPut("/person/updateperson/{PersonCode}")]
+        public IActionResult UpdatePerson([FromBody] PersonRequest request, int PersonCode)
+        {
+            var resposta = _personService.UpdatePerson(request, PersonCode);
+            if (resposta == null)
+            {
+                return BadRequest();
+            }
+            return Ok(resposta);
+        }
 
         #region
         //[HttpGet("/BuscarTipoPessoa")]
