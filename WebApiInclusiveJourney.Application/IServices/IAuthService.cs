@@ -9,9 +9,9 @@ using WebApiInclusiveJourney.Repository.Models;
 
 namespace WebApiInclusiveJourney.Application.IServices
 {
-    public interface IAutenticacaoService
+    public interface IAuthService
     {
-        AutenticacaoResponse Autenticar(AutenticacaoRequest request);
+        AuthResponse Authentication(AuthRequest request);
         string GerarTokenJwt(TabUsuario usuario);
     }
 }

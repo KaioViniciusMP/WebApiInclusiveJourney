@@ -7,17 +7,17 @@ namespace WebApiInclusiveJourney.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AutenticacaoController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private readonly IAutenticacaoService _autenticacoesServices;
-        public AutenticacaoController(IAutenticacaoService service)
+        private readonly IAuthService _authService;
+        public AuthController(IAuthService service)
         {
-            _autenticacoesServices = service;
+            _authService = service;
         }
-        [HttpPost]
-        public IActionResult Login([FromBody] AutenticacaoRequest request)
+        [HttpPost("/auth/login")]
+        public IActionResult Login([FromBody] AuthRequest request)
         {
-            AutenticacaoResponse resposta = _autenticacoesServices.Autenticar(request);
+            AuthResponse resposta = _authService.Authentication(request);
             if (resposta == null)
             {
                 return Unauthorized();

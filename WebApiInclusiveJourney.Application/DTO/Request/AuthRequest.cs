@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebApiInclusiveJourney.Application.DTO.Request
 {
-    public class AutenticacaoRequest
+    public class AuthRequest
     {
-        public string Usuario { get; set; }
-        public string Senha { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
     }
 }

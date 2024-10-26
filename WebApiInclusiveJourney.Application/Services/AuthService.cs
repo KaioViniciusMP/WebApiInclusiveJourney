@@ -13,27 +13,27 @@ using WebApiInclusiveJourney.Repository.Models;
 
 namespace WebApiInclusiveJourney.Application.Services
 {
-    public class AutenticacaoService : IAutenticacaoService
+    public class AuthService : IAuthService
     {
         private readonly WebApiInclusiveJourneyContext _context;
 
-        public AutenticacaoService(WebApiInclusiveJourneyContext context)
+        public AuthService(WebApiInclusiveJourneyContext context)
         {
             _context = context;
         }
 
-        public AutenticacaoResponse Autenticar(AutenticacaoRequest request)
+        public AuthResponse Authentication(AuthRequest request)
         {
-            TabUsuario usuario = _context.tabUsuario.FirstOrDefault((TabUsuario x) => x.usuario == request.Usuario && x.senha == request.Senha);
+            TabUsuario usuario = _context.tabUsuario.FirstOrDefault((TabUsuario x) => x.usuario == request.email && x.senha == request.password);
             if (usuario != null)
             {
                 string tokenString = GerarTokenJwt(usuario);
-                return new AutenticacaoResponse
+                return new AuthResponse
                 {
-                    token = tokenString,
-                    usuarioCodigo = usuario.codigo,
-                    Nome = usuario.nome,
-                    Usuario = usuario.usuario
+                    //token = tokenString,
+                    userCode = usuario.codigo,
+                    //Nome = usuario.nome,
+                    //Usuario = usuario.usuario
                 };
             }
             return null;
