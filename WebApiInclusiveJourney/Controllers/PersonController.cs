@@ -24,6 +24,16 @@ namespace WebApiInclusiveJourney.Controllers
             }
             return Ok(resposta);
         }
+        [HttpGet("/person/{PersonCode}")]
+        public IActionResult GetPerson(int PersonCode)
+        {
+            var resposta = _personService.GetPerson(PersonCode);
+            if (resposta == null)
+            {
+                return BadRequest();
+            }
+            return Ok(resposta);
+        }
 
         #region
         //[HttpGet("/BuscarTipoPessoa")]

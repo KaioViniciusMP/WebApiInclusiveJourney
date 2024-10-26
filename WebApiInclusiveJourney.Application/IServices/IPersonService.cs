@@ -12,6 +12,7 @@ namespace WebApiInclusiveJourney.Application.IServices
     public interface IPersonService
     {
         PersonResponse RegisterPerson(PersonRequest request);
+        PersonResponse GetPerson(int personCode);
 
         #region
         //List<TabPessoaTipo> BuscarTipoPessoa();

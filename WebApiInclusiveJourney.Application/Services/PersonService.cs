@@ -79,6 +79,42 @@ namespace WebApiInclusiveJourney.Application.Services
             }
         }
 
+        public PersonResponse GetPerson(int personCode)
+        {
+            try
+            {
+                var person = _context.tabPerson.Where(c => c.Codigo == personCode)
+                                               .Select(person => new PersonResponse
+                                               {
+                                                   Codigo = person.Codigo,
+                                                   Email = person.Email ?? string.Empty,
+                                                   Role = person.Role ?? string.Empty,
+                                                   Password = person.Password ?? string.Empty,
+                                                   Name = person.Name ?? string.Empty,
+                                                   FullName = person.FullName ?? string.Empty,
+                                                   DateOfBirth = person.DateOfBirth,
+                                                   Gender = person.Gender ?? string.Empty,
+                                                   DisabilityType = person.DisabilityType ?? string.Empty,
+                                                   PostalCode = person.PostalCode ?? string.Empty,
+                                                   Street = person.Street ?? string.Empty,
+                                                   AdditionalInfo = person.AdditionalInfo ?? string.Empty,
+                                                   Neighborhood = person.Neighborhood ?? string.Empty,
+                                                   City = person.City ?? string.Empty,
+                                                   Number = person.Number ?? string.Empty,
+                                                   State = person.State ?? string.Empty,
+                                                   Username = person.Username ?? string.Empty,
+                                                   UserDescription = person.UserDescription ?? string.Empty,
+                                                   Avatar = person.Avatar ?? string.Empty
+                                               }).FirstOrDefault(); 
+
+                return person;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (ex) if necessary
+                return null;
+            }
+        }
 
         #region 
         //public PessoaResponse CadastrarPessoa(PessoaRequest request)
