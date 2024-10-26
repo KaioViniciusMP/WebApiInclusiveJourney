@@ -28,6 +28,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ILugarService, LugarService>();
+builder.Services.AddScoped<ICommentsService, CommentsService>();
 
 var app = builder.Build();
 
