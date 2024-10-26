@@ -13,6 +13,7 @@ namespace WebApiInclusiveJourney.Application.IServices
     {
         List<CategoriesResponse> GetCategories();
         List<ZonesResponse> GetZones();
+        List<PlacesResponse> GetPlacesForZones(int zoneCode);
 
         #region
         //bool InserirLugar(LugarRequest request);

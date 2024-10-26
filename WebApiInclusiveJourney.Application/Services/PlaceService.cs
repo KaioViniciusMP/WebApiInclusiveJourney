@@ -57,6 +57,39 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
+        public List<PlacesResponse> GetPlacesForZones(int zoneCode)
+        {
+            try
+            {
+                var zones = _ctx.tabPlaces.Where(c => c.ZoneCode == zoneCode).ToList();
+
+                var result = zones.Select(zone => new PlacesResponse
+                {
+                    ZoneCode = zoneCode,
+                    Cep = zone.Cep,
+                    City = zone.City,
+                    Codigo = zone.Codigo,
+                    Complement = zone.Complement,
+                    Description = zone.Description,
+                    LocalAssessment = zone.LocalAssessment,
+                    NameLocal = zone.NameLocal,
+                    Neighborhood = zone.Neighborhood,
+                    NumberHome = zone.NumberHome,
+                    OpeningHours = zone.OpeningHours,
+                    State = zone.State,
+                    Street = zone.Street,
+                    TypeAcessibility = zone.TypeAcessibility,
+                    ZoneCategorie = zone.ZoneCategorie
+                    
+                }).ToList();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         #region
         //public bool InserirLugar(LugarRequest request)

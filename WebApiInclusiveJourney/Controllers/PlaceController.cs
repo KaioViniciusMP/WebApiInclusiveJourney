@@ -38,8 +38,17 @@ namespace WebApiInclusiveJourney.Controllers
                 return Ok(response);
         }
 
-
         //GetPlacesForZones - tabPlaces
+        [HttpGet("/place/placesForZones/{zoneCode}")]
+        public IActionResult GetPlacesForZones(int zoneCode)
+        {
+            var response = _placeService.GetPlacesForZones(zoneCode);
+            if (response.Count < 1)
+                return NoContent();
+            else
+                return Ok(response);
+        }
+
         //GetPlacesForCategories - tabPlaces
 
 
