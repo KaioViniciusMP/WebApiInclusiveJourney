@@ -50,7 +50,15 @@ namespace WebApiInclusiveJourney.Controllers
         }
 
         //GetPlacesForCategories - tabPlaces
-
+        [HttpGet("/place/placesForCategories/{categorieCode}")]
+        public IActionResult GetPlacesForCategories(int categorieCode)
+        {
+            var response = _placeService.GetPlacesForCategories(categorieCode);
+            if (response.Count < 1)
+                return NoContent();
+            else
+                return Ok(response);
+        }
 
         #region
         //[HttpPost]
