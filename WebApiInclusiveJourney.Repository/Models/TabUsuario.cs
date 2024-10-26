@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,14 @@ namespace WebApiInclusiveJourney.Repository.Models
     {
         [Key]
         public int codigo { get; set; }
-        public string nome { get; set; }
-        public string usuario { get; set; }
-        public string senha { get; set; }
+
+        [Column("name")]
+        public string name { get; set; }
+
+        [Column("email")]
+        public string email { get; set; }
+
+        [Column("password")]
+        public string password { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 using WebApiInclusiveJourney.Application.DTO.Request;
 using WebApiInclusiveJourney.Application.DTO.Response;
 using WebApiInclusiveJourney.Application.IServices;
@@ -23,6 +24,16 @@ namespace WebApiInclusiveJourney.Controllers
                 return Unauthorized();
             }
             return Ok(resposta);
+        }
+        [HttpPost("/auth/forgot-password")]
+        public IActionResult ForgotPassword([FromBody] Application.DTO.Request.ForgotPasswordRequest request)
+        {
+            bool response = _authService.ForgotPassword(request);
+            if (response == true)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

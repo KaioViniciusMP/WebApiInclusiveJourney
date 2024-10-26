@@ -31,9 +31,9 @@ namespace WebApiInclusiveJourney.Application.Services
                     return objUsuarioResponse;
                 }
 
-                objUsuario.nome = request.nome;
-                objUsuario.usuario = request.usuario;
-                objUsuario.senha = request.senha;
+                objUsuario.name = request.nome;
+                objUsuario.email = request.usuario;
+                objUsuario.password = request.senha;
 
                 _context.tabUsuario.Add(objUsuario);
                 _context.SaveChanges();

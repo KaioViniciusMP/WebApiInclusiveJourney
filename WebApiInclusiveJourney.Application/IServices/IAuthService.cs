@@ -13,5 +13,6 @@ namespace WebApiInclusiveJourney.Application.IServices
     {
         AuthResponse Authentication(AuthRequest request);
         string GerarTokenJwt(TabUsuario usuario);
+        bool ForgotPassword(ForgotPasswordRequest request);
     }
 }

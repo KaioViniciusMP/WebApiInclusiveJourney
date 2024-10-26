@@ -15,16 +15,16 @@ namespace WebApiInclusiveJourney.Application.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly WebApiInclusiveJourneyContext _context;
+        private readonly WebApiInclusiveJourneyContext _ctx;
 
         public AuthService(WebApiInclusiveJourneyContext context)
         {
-            _context = context;
+            _ctx = context;
         }
 
         public AuthResponse Authentication(AuthRequest request)
         {
-            TabUsuario usuario = _context.tabUsuario.FirstOrDefault((TabUsuario x) => x.usuario == request.email && x.senha == request.password);
+            TabUsuario usuario = _ctx.tabUsuario.FirstOrDefault(x =>  x.password == request.password);
             if (usuario != null)
             {
                 string tokenString = GerarTokenJwt(usuario);
@@ -57,6 +57,31 @@ namespace WebApiInclusiveJourney.Application.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var stringToken = tokenHandler.WriteToken(token);
             return stringToken;
+        }
+
+
+        public bool ForgotPassword(ForgotPasswordRequest request)
+        {
+            try
+            {
+                TabUsuario usuario = _ctx.tabUsuario.FirstOrDefault(x => x.email == request.email);
+
+                if (usuario != null)
+                {
+                    usuario.password = request.newPassword; 
+
+                    _ctx.tabUsuario.Update(usuario);
+                    _ctx.SaveChanges();
+
+                    return true;
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
