@@ -12,6 +12,7 @@ namespace WebApiInclusiveJourney.Application.IServices
     public interface IPlaceService
     {
         List<CategoriesResponse> GetCategories();
+        List<ZonesResponse> GetZones();
 
         #region
         //bool InserirLugar(LugarRequest request);

@@ -38,6 +38,25 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
+        public List<ZonesResponse> GetZones()
+        {
+            try
+            {
+                var zones = _ctx.tabZone.ToList();
+
+                var result = zones.Select(zone => new ZonesResponse
+                {
+                    codigo = zone.Codigo,
+                    name = zone.Name,
+                }).ToList();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         #region
         //public bool InserirLugar(LugarRequest request)

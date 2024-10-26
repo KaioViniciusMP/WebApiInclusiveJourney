@@ -28,6 +28,17 @@ namespace WebApiInclusiveJourney.Controllers
         }
 
         //GetZones- List<tabZone>
+        [HttpGet("/place/zones")]
+        public IActionResult GetZones()
+        {
+            var response = _placeService.GetZones();
+            if (response.Count < 1)
+                return NoContent();
+            else
+                return Ok(response);
+        }
+
+
         //GetPlacesForZones - tabPlaces
         //GetPlacesForCategories - tabPlaces
 
