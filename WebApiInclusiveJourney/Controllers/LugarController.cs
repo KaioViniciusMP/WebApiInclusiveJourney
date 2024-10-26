@@ -33,5 +33,14 @@ namespace WebApiInclusiveJourney.Controllers
             else
                 return Ok(resposta);
         }
+        [HttpPost("/BuscarLugaresPorZona")]
+        public IActionResult BuscarLugaresPorZona(BuscarLugaresPorZonaRequest request)
+        {
+            List<LugarResponse> resposta = _lugarServices.BuscarLugaresPorZona(request);
+            if (resposta == null)
+                return NoContent();
+            else
+                return Ok(resposta);
+        }
     }
 }

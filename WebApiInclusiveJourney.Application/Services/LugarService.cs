@@ -78,6 +78,34 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
+        public List<LugarResponse> BuscarLugaresPorZona(BuscarLugaresPorZonaRequest request)
+        {
+            try
+            {
+                var lugares = _context.tabLugar.ToList();
 
+                var lugaresResponse = lugares.Where(c => c.zona == request.nomeZona).Select(lugar => new LugarResponse
+                {
+                    codigo = lugar.codigo,
+                    nome = lugar.nome,
+                    dataCadastro = lugar.dataCadastro,
+                    rua = lugar.rua,
+                    numero = lugar.numero,
+                    complemento = lugar.complemento,
+                    bairro = lugar.bairro,
+                    cidade = lugar.cidade,
+                    cep = lugar.cep,
+                    uf = lugar.uf,
+                    usuarioCodigo = lugar.usuarioCodigo,
+                    zona = lugar.zona
+                }).ToList();
+
+                return lugaresResponse;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

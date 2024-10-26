@@ -13,5 +13,6 @@ namespace WebApiInclusiveJourney.Application.IServices
     {
         bool InserirLugar(LugarRequest request);
         List<LugarResponse> BuscarLugares();
+        List<LugarResponse> BuscarLugaresPorZona(BuscarLugaresPorZonaRequest request);
     }
 }
