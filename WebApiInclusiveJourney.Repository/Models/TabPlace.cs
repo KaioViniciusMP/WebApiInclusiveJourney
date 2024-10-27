@@ -25,5 +25,6 @@ namespace WebApiInclusiveJourney.Repository.Models
         public string TypeAcessibility { get; set; }
         public int ZoneCode { get; set; }
         public int ZoneCategorie { get; set; }
+        public bool IsFavorite { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace WebApiInclusiveJourney.Application.IServices
         List<PlacesResponse> GetPlacesForZones(int zoneCode);
         List<PlacesResponse> GetPlacesForCategories(int categorieCode);
         bool RegisterPlace(RequestPlace request);
+        bool FavoritePlace( int placeCode, FavoritePlaceRequest request);
 
         #region
         //bool InserirLugar(LugarRequest request);

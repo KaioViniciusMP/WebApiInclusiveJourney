@@ -22,5 +22,6 @@ namespace WebApiInclusiveJourney.Application.DTO.Request
         public string TypeAcessibility { get; set; }
         public int ZoneCode { get; set; }
         public int ZoneCategorie { get; set; }
+        public bool IsFavorite { get; set; } = false;
     }
 }

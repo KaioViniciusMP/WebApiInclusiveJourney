@@ -143,11 +143,32 @@ namespace WebApiInclusiveJourney.Application.Services
                     NumberHome = request.NumberHome,
                     OpeningHours = request.OpeningHours,
                     TypeAcessibility = request.TypeAcessibility,
-                    ZoneCategorie = request.ZoneCategorie
+                    ZoneCategorie = request.ZoneCategorie,
+                    IsFavorite = request.IsFavorite,
                 };
 
                 _ctx.tabPlaces.Add(tabPlaces); 
                 _ctx.SaveChanges(); 
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool FavoritePlace(int placeCode, FavoritePlaceRequest request)
+        {
+            try
+            {
+                var zones = _ctx.tabPlaces.Where(c => c.Codigo == placeCode).FirstOrDefault();
+                if(zones == null)
+                    return false;
+
+                zones.IsFavorite = request.isFavorite;
+
+                _ctx.SaveChanges();
+
                 return true;
             }
             catch (Exception)

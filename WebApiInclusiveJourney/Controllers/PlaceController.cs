@@ -70,6 +70,16 @@ namespace WebApiInclusiveJourney.Controllers
                 return Ok();
         }
 
+        [HttpPost("/place/favoritePlace/{placeCode}")]
+        public IActionResult FavoritePlace([FromRoute] int placeCode, [FromBody] FavoritePlaceRequest request)
+        {
+            var response = _placeService.FavoritePlace(placeCode, request);
+            if (response == false)
+                return BadRequest();
+            else
+                return Ok();
+        }
+
         #region
         //[HttpPost]
         //public IActionResult InserirLugar([FromBody] LugarRequest request)
