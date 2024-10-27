@@ -79,6 +79,16 @@ namespace WebApiInclusiveJourney.Controllers
             else
                 return Ok();
         }
+        
+        [HttpGet("/place/getFavoritePlace")]
+        public IActionResult GetFavoritePlace()
+        {
+            var response = _placeService.GetFavoritePlace();
+            if (response.Count < 1)
+                return NoContent();
+            else
+                return Ok(response);
+        }
 
         #region
         //[HttpPost]
