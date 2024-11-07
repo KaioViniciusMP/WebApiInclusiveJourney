@@ -12,7 +12,7 @@ namespace WebApiInclusiveJourney.Application.IServices
     public interface IAuthService
     {
         AuthResponse Authentication(AuthRequest request);
-        string GerarTokenJwt(TabUsuario usuario);
+        string GerarTokenJwt(TabPerson usuario);
         bool ForgotPassword(ForgotPasswordRequest request);
     }
 }

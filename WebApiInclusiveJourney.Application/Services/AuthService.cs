@@ -24,14 +24,14 @@ namespace WebApiInclusiveJourney.Application.Services
 
         public AuthResponse Authentication(AuthRequest request)
         {
-            TabUsuario usuario = _ctx.tabUsuario.FirstOrDefault(x =>  x.password == request.password);
+            TabPerson usuario = _ctx.tabPerson.FirstOrDefault(x =>  x.Password == request.password);
             if (usuario != null)
             {
                 string tokenString = GerarTokenJwt(usuario);
                 return new AuthResponse
                 {
                     //token = tokenString,
-                    userCode = usuario.codigo,
+                    userCode = usuario.Codigo,
                     //Nome = usuario.nome,
                     //Usuario = usuario.usuario
                 };
@@ -39,7 +39,7 @@ namespace WebApiInclusiveJourney.Application.Services
             return null;
         }
 
-        public string GerarTokenJwt(TabUsuario usuario)
+        public string GerarTokenJwt(TabPerson usuario)
         {
             var issuer = "var"; //Quem esta emitindo o token
             var audience = "var"; //Pra quem vai liberar o acesso
@@ -49,7 +49,7 @@ namespace WebApiInclusiveJourney.Application.Services
 
             var claims = new[]
             {
-                new System.Security.Claims.Claim("usuarioCodigo",usuario.codigo.ToString()) // na hora de gerar o token, guarda aqui que quem gerou o token foi esse "usuarioId", e o id do usuario, foi o que buscou no banco (usuario.id.ToString())
+                new System.Security.Claims.Claim("Codigo",usuario.Codigo.ToString()) // na hora de gerar o token, guarda aqui que quem gerou o token foi esse "usuarioId", e o id do usuario, foi o que buscou no banco (usuario.id.ToString())
                 // Um Claim contém uma informação específica sobre o usuário, como o nome, email, permissões de acesso, dentre outras. Essas informações podem ser utilizadas para verificar se o usuário tem as permissões necessárias para acessar determinado recurso ou funcionalidade do sistema.
             };
 
@@ -64,13 +64,13 @@ namespace WebApiInclusiveJourney.Application.Services
         {
             try
             {
-                TabUsuario usuario = _ctx.tabUsuario.FirstOrDefault(x => x.email == request.email);
+                TabPerson usuario = _ctx.tabPerson.FirstOrDefault(x => x.Email == request.email);
 
                 if (usuario != null)
                 {
-                    usuario.password = request.newPassword; 
+                    usuario.Password = request.newPassword; 
 
-                    _ctx.tabUsuario.Update(usuario);
+                    _ctx.tabPerson.Update(usuario);
                     _ctx.SaveChanges();
 
                     return true;
