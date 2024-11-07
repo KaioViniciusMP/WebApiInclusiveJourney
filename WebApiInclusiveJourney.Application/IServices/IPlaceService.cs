@@ -18,6 +18,7 @@ namespace WebApiInclusiveJourney.Application.IServices
         bool RegisterPlace(RequestPlace request);
         bool FavoritePlace( int placeCode, FavoritePlaceRequest request);
         List<PlacesResponse> GetFavoritePlace();
+        RegistrarImagePlaceResponse RegistrarImagePlace(RegistrarImagePlaceRequest request);
 
         #region
         //bool InserirLugar(LugarRequest request);

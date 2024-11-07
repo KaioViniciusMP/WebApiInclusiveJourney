@@ -23,5 +23,7 @@ namespace WebApiInclusiveJourney.Application.DTO.Request
         public int ZoneCode { get; set; }
         public int ZoneCategorie { get; set; }
         public bool IsFavorite { get; set; } = false;
+        public string ImageStream { get; set; } // Novo campo para o stream de imagem
+        public string ImageName { get; set; } // Novo campo para o nome da imagem
     }
 }

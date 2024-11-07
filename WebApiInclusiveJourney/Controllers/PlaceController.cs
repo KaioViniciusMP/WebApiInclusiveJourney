@@ -89,6 +89,16 @@ namespace WebApiInclusiveJourney.Controllers
             else
                 return Ok(response);
         }
+        
+        [HttpPost("/place/RegistrarImagePlace")]
+        public IActionResult RegistrarImagePlace(RegistrarImagePlaceRequest request)
+        {
+            RegistrarImagePlaceResponse response = _placeService.RegistrarImagePlace(request);
+            if (response.status != true)
+                return BadRequest(response);
+            else
+                return Ok(response);
+        }
 
         #region
         //[HttpPost]

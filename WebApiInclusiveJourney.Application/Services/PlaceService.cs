@@ -26,7 +26,8 @@ namespace WebApiInclusiveJourney.Application.Services
             {
                 var categories = _ctx.tabCategories.ToList();
 
-                var result = categories.Select(categories => new CategoriesResponse{
+                var result = categories.Select(categories => new CategoriesResponse
+                {
                     Codigo = categories.Codigo,
                     Name = categories.Name,
                 }).ToList();
@@ -62,6 +63,7 @@ namespace WebApiInclusiveJourney.Application.Services
             try
             {
                 var zones = _ctx.tabPlaces.Where(c => c.ZoneCode == zoneCode).ToList();
+                S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
 
                 var result = zones.Select(zone => new PlacesResponse
                 {
@@ -79,8 +81,9 @@ namespace WebApiInclusiveJourney.Application.Services
                     State = zone.State,
                     Street = zone.Street,
                     TypeAcessibility = zone.TypeAcessibility,
-                    ZoneCategorie = zone.ZoneCategorie
-                    
+                    ZoneCategorie = zone.ZoneCategorie,
+                    ImageUrl = s3Service.GetUrlFile(zone.ImageName, 24)
+
                 }).ToList();
 
                 return result;
@@ -90,12 +93,13 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
-        
+
         public List<PlacesResponse> GetPlacesForCategories(int categorieCode)
         {
             try
             {
                 var zones = _ctx.tabPlaces.Where(c => c.ZoneCategorie == categorieCode).ToList();
+                S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
 
                 var result = zones.Select(zone => new PlacesResponse
                 {
@@ -113,8 +117,9 @@ namespace WebApiInclusiveJourney.Application.Services
                     State = zone.State,
                     Street = zone.Street,
                     TypeAcessibility = zone.TypeAcessibility,
-                    ZoneCategorie = zone.ZoneCategorie
-                    
+                    ZoneCategorie = zone.ZoneCategorie,
+                    ImageUrl = s3Service.GetUrlFile(zone.ImageName, 24)
+
                 }).ToList();
 
                 return result;
@@ -124,10 +129,85 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
+
+        public RegistrarImagePlaceResponse RegistrarImagePlace(RegistrarImagePlaceRequest request)
+        {
+            RegistrarImagePlaceResponse response = new RegistrarImagePlaceResponse();
+
+            try
+            {
+                string imageName = request.ImageName ?? Guid.NewGuid().ToString() + ".jpg";
+                S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
+
+                using (var imageStream = new MemoryStream(Convert.FromBase64String(request.ImageStream)))
+                {
+                    s3Service.Upload(imageStream, imageName);
+                }
+
+                var place = _ctx.tabPlaces.Where(c => c.Codigo == request.placeCode).FirstOrDefault();
+
+                if (place != null)
+                {
+                    place.ImageName = imageName;
+
+                    _ctx.tabPlaces.Update(place);
+                    _ctx.SaveChanges();
+
+                    var result = new PlacesResponse
+                    {
+                        ZoneCode = place.ZoneCode,
+                        Cep = place.Cep,
+                        City = place.City,
+                        Codigo = place.Codigo,
+                        Complement = place.Complement,
+                        Description = place.Description,
+                        LocalAssessment = place.LocalAssessment,
+                        NameLocal = place.NameLocal,
+                        Neighborhood = place.Neighborhood,
+                        NumberHome = place.NumberHome,
+                        OpeningHours = place.OpeningHours,
+                        State = place.State,
+                        Street = place.Street,
+                        TypeAcessibility = place.TypeAcessibility,
+                        ZoneCategorie = place.ZoneCategorie,
+                        ImageUrl = s3Service.GetUrlFile(place.ImageName, 24) // Retorna a URL da imagem no S3
+                    };
+
+                    response.status = true;
+                    response.message = "Foto incluída com sucesso!";
+                    response.preview = result;
+                }
+                else
+                {
+                    response.status = false;
+                    response.message = "Local não encontrado!";
+                    response.preview = null;
+                }
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.status = false;
+                response.message = $"Ocorreu algum erro ao incluir a foto!!! err: {ex}";
+                response.preview = null;
+
+                return response;
+            }
+        }
+
         public bool RegisterPlace(RequestPlace request)
         {
             try
             {
+                string imageName = request.ImageName ?? Guid.NewGuid().ToString() + ".jpg";
+                S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
+
+                using (var imageStream = new MemoryStream(Convert.FromBase64String(request.ImageStream)))
+                {
+                    s3Service.Upload(imageStream, imageName);
+                }
+
                 TabPlaces tabPlaces = new TabPlaces
                 {
                     Cep = request.Cep,
@@ -145,10 +225,11 @@ namespace WebApiInclusiveJourney.Application.Services
                     TypeAcessibility = request.TypeAcessibility,
                     ZoneCategorie = request.ZoneCategorie,
                     IsFavorite = request.IsFavorite,
+                    ImageName = imageName
                 };
 
-                _ctx.tabPlaces.Add(tabPlaces); 
-                _ctx.SaveChanges(); 
+                _ctx.tabPlaces.Add(tabPlaces);
+                _ctx.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -162,7 +243,7 @@ namespace WebApiInclusiveJourney.Application.Services
             try
             {
                 var zones = _ctx.tabPlaces.Where(c => c.Codigo == placeCode).FirstOrDefault();
-                if(zones == null)
+                if (zones == null)
                     return false;
 
                 zones.IsFavorite = request.isFavorite;
@@ -182,6 +263,7 @@ namespace WebApiInclusiveJourney.Application.Services
             try
             {
                 var zones = _ctx.tabPlaces.Where(c => c.IsFavorite == true).ToList();
+                S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
 
                 var result = zones.Select(zone => new PlacesResponse
                 {
@@ -199,7 +281,8 @@ namespace WebApiInclusiveJourney.Application.Services
                     State = zone.State,
                     Street = zone.Street,
                     TypeAcessibility = zone.TypeAcessibility,
-                    ZoneCategorie = zone.ZoneCategorie
+                    ZoneCategorie = zone.ZoneCategorie,
+                    ImageUrl = s3Service.GetUrlFile(zone.ImageName, 24)
 
                 }).ToList();
 

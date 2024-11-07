@@ -24,5 +24,6 @@ namespace WebApiInclusiveJourney.Application.DTO.Response
         public int ZoneCode { get; set; }
         public int ZoneCategorie { get; set; }
         public bool IsFavorite { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }
