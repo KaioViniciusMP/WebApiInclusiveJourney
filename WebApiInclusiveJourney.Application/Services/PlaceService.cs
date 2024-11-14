@@ -238,16 +238,23 @@ namespace WebApiInclusiveJourney.Application.Services
             }
         }
 
-        public bool FavoritePlace(int placeCode, FavoritePlaceRequest request)
+        public bool FavoritePlace(/*int placeCode,*/ FavoritePlaceRequest request)
         {
             try
             {
-                var zones = _ctx.tabPlaces.Where(c => c.Codigo == placeCode).FirstOrDefault();
-                if (zones == null)
-                    return false;
+                //var zones = _ctx.tabPlaces.Where(c => c.Codigo == placeCode).FirstOrDefault();
+                //if (zones == null)
+                //    return false;
 
-                zones.IsFavorite = request.isFavorite;
+                //zones.IsFavorite = request.isFavorite;
 
+                TabPlaceFavorite_PersonCode placeFavorite_PersonCode = new TabPlaceFavorite_PersonCode
+                {
+                    PersonCode = request.PersonCode,
+                    PlacesCode = request.PlacesCode
+                };
+
+                _ctx.TabPlaceFavorite_PersonCode.Add(placeFavorite_PersonCode);
                 _ctx.SaveChanges();
 
                 return true;
@@ -280,6 +287,7 @@ namespace WebApiInclusiveJourney.Application.Services
                     OpeningHours = zone.OpeningHours,
                     State = zone.State,
                     Street = zone.Street,
+                    IsFavorite = zone.IsFavorite,
                     TypeAcessibility = zone.TypeAcessibility,
                     ZoneCategorie = zone.ZoneCategorie,
                     ImageUrl = s3Service.GetUrlFile(zone.ImageName, 24)
@@ -287,6 +295,45 @@ namespace WebApiInclusiveJourney.Application.Services
                 }).ToList();
 
                 return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        
+        public List<PlacesResponse> GetFavoritePlaceOfUser(GetFavoritePlaceOfUserRequest request)
+        {
+            try
+            {
+                S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
+
+                var zones = (from tpfpc in _ctx.TabPlaceFavorite_PersonCode
+                             join tpls in _ctx.tabPlaces on tpfpc.PlacesCode equals tpls.Codigo
+                             join tp in _ctx.tabPerson on tpfpc.PersonCode equals tp.Codigo
+                             where tpfpc.PersonCode == request.PersonCode
+                             select new PlacesResponse
+                             {
+                                 ZoneCode = tpls.Codigo,
+                                 Cep = tpls.Cep,
+                                 City = tpls.City,
+                                 Codigo = tpls.Codigo,
+                                 Complement = tpls.Complement,
+                                 Description = tpls.Description,
+                                 LocalAssessment = tpls.LocalAssessment,
+                                 NameLocal = tpls.NameLocal,
+                                 Neighborhood = tpls.Neighborhood,
+                                 NumberHome = tpls.NumberHome,
+                                 OpeningHours = tpls.OpeningHours,
+                                 State = tpls.State,
+                                 Street = tpls.Street,
+                                 IsFavorite = tpls.IsFavorite,
+                                 TypeAcessibility = tpls.TypeAcessibility,
+                                 ZoneCategorie = tpls.ZoneCategorie,
+                                 ImageUrl = s3Service.GetUrlFile(tpls.ImageName, 24)
+                             }).ToList();
+
+                return zones;
             }
             catch (Exception)
             {

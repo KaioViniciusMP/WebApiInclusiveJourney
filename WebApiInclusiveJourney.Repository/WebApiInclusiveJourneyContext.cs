@@ -23,6 +23,7 @@ namespace WebApiInclusiveJourney.Repository
         public DbSet<TabZone> tabZone { get; set; }
         public DbSet<TabCategories> tabCategories { get; set; }
         public DbSet<TabPlaces> tabPlaces { get; set; }
+        public DbSet<TabPlaceFavorite_PersonCode> TabPlaceFavorite_PersonCode { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +39,7 @@ namespace WebApiInclusiveJourney.Repository
             modelBuilder.Entity<TabTipoDeficiencia>();
             modelBuilder.Entity<TabPessoaTipo>();
             modelBuilder.Entity<TabLugar>();
+            modelBuilder.Entity<TabPlaceFavorite_PersonCode>();
         }
     }
 }

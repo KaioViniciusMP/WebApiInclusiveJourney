@@ -70,10 +70,10 @@ namespace WebApiInclusiveJourney.Controllers
                 return Ok();
         }
 
-        [HttpPost("/place/favoritePlace/{placeCode}")]
-        public IActionResult FavoritePlace([FromRoute] int placeCode, [FromBody] FavoritePlaceRequest request)
+        [HttpPost("/place/favoritePlace")]// /{placeCode}
+        public IActionResult FavoritePlace(/*[FromRoute] int placeCode,*/ [FromBody] FavoritePlaceRequest request)
         {
-            var response = _placeService.FavoritePlace(placeCode, request);
+            var response = _placeService.FavoritePlace(/*placeCode,*/ request);
             if (response == false)
                 return BadRequest();
             else
@@ -98,6 +98,16 @@ namespace WebApiInclusiveJourney.Controllers
                 return BadRequest(response);
             else
                 return Ok(response);
+        }
+        
+        [HttpPost("/place/GetFavoritePlaceOfUser")]
+        public IActionResult GetFavoritePlaceOfUser(GetFavoritePlaceOfUserRequest request)
+        {
+            List<PlacesResponse> response = _placeService.GetFavoritePlaceOfUser(request);
+            if (response.Count > 0)
+                return Ok(response);
+            else
+                return BadRequest(response);
         }
 
         #region

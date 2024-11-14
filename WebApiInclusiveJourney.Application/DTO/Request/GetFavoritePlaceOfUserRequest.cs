@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace WebApiInclusiveJourney.Application.DTO.Request
 {
-    public class FavoritePlaceRequest
+    public class GetFavoritePlaceOfUserRequest
     {
-        public int PlacesCode { get; set; }
         public int PersonCode { get; set; }
-        //public bool isFavorite { get; set; }
     }
 }
