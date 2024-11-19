@@ -20,11 +20,5 @@ namespace WebApiInclusiveJourney.Application.IServices
         List<PlacesResponse> GetFavoritePlace();
         RegistrarImagePlaceResponse RegistrarImagePlace(RegistrarImagePlaceRequest request);
         List<PlacesResponse> GetFavoritePlaceOfUser(GetFavoritePlaceOfUserRequest request);
-
-        #region
-        //bool InserirLugar(LugarRequest request);
-        //List<LugarResponse> BuscarLugares();
-        //List<LugarResponse> BuscarLugaresPorZona(BuscarLugaresPorZonaRequest request);
-        #endregion
     }
 }

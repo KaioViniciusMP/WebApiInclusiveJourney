@@ -109,35 +109,5 @@ namespace WebApiInclusiveJourney.Controllers
             else
                 return BadRequest(response);
         }
-
-        #region
-        //[HttpPost]
-        //public IActionResult InserirLugar([FromBody] LugarRequest request)
-        //{
-        //    bool resposta = _lugarServices.InserirLugar(request);
-        //    if (resposta == false)
-        //        return BadRequest();
-        //    else
-        //        return Ok();
-        //}
-        //[HttpGet]
-        //public IActionResult BuscarLugares()
-        //{
-        //    List<LugarResponse> resposta = _lugarServices.BuscarLugares();
-        //    if (resposta == null)
-        //        return NoContent();
-        //    else
-        //        return Ok(resposta);
-        //}
-        //[HttpPost("/BuscarLugaresPorZona")]
-        //public IActionResult BuscarLugaresPorZona(BuscarLugaresPorZonaRequest request)
-        //{
-        //    List<LugarResponse> resposta = _lugarServices.BuscarLugaresPorZona(request);
-        //    if (resposta == null)
-        //        return NoContent();
-        //    else
-        //        return Ok(resposta);
-        //}
-        #endregion
     }
 }
