@@ -70,14 +70,14 @@ namespace WebApiInclusiveJourney.Controllers
                 return Ok();
         }
 
-        [HttpPost("/place/favoritePlace")]// /{placeCode}
-        public IActionResult FavoritePlace(/*[FromRoute] int placeCode,*/ [FromBody] FavoritePlaceRequest request)
+        [HttpPost("/place/FavoriteAndRemovedPlaceFavorited")]
+        public IActionResult FavoriteAndRemovedPlaceFavorited([FromBody] FavoriteAndRemovedPlaceFavoritedRequest request)
         {
-            var response = _placeService.FavoritePlace(/*placeCode,*/ request);
-            if (response == false)
-                return BadRequest();
+            var response = _placeService.FavoriteAndRemovedPlaceFavorited(request);
+            if (response.status == false)
+                return BadRequest(response.description);
             else
-                return Ok();
+                return Ok(response.description);
         }
         
         [HttpGet("/place/getFavoritePlace")]

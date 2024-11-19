@@ -238,15 +238,23 @@ namespace WebApiInclusiveJourney.Application.Services
             }
         }
 
-        public bool FavoritePlace(/*int placeCode,*/ FavoritePlaceRequest request)
+        public FavoritePlaceResponse FavoriteAndRemovedPlaceFavorited(FavoriteAndRemovedPlaceFavoritedRequest request)
         {
+            FavoritePlaceResponse response = new FavoritePlaceResponse();
+
             try
             {
-                //var zones = _ctx.tabPlaces.Where(c => c.Codigo == placeCode).FirstOrDefault();
-                //if (zones == null)
-                //    return false;
+                var place = _ctx.TabPlaceFavorite_PersonCode.Where(c => c.PersonCode == request.PersonCode && c.PlacesCode == request.PlacesCode).FirstOrDefault();
+                if (place != null)
+                {
+                    _ctx.Remove(place);
+                    _ctx.SaveChanges();
 
-                //zones.IsFavorite = request.isFavorite;
+                    response.status = true;
+                    response.description = "place favorite successfully removed!";
+                    return response;
+                }
+
 
                 TabPlaceFavorite_PersonCode placeFavorite_PersonCode = new TabPlaceFavorite_PersonCode
                 {
@@ -257,11 +265,16 @@ namespace WebApiInclusiveJourney.Application.Services
                 _ctx.TabPlaceFavorite_PersonCode.Add(placeFavorite_PersonCode);
                 _ctx.SaveChanges();
 
-                return true;
+                response.status = true;
+                response.description = "insert favorite place successfully!";
+
+                return response;
             }
             catch (Exception)
             {
-                return false;
+                response.status = false;
+                response.description = "Error removed favorite place!";
+                return response;
             }
         }
 
@@ -301,7 +314,7 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
-        
+
         public List<PlacesResponse> GetFavoritePlaceOfUser(GetFavoritePlaceOfUserRequest request)
         {
             try
@@ -340,96 +353,5 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
-
-        #region
-        //public bool InserirLugar(LugarRequest request)
-        //{
-        //    try
-        //    {
-        //        var lugar = new TabLugar()
-        //        {
-        //            bairro = request.bairro,
-        //            cep = request.cep,
-        //            cidade = request.cidade,
-        //            complemento = request.complemento,
-        //            dataCadastro = request.dataCadastro,
-        //            nome = request.nome,
-        //            numero = request.numero,
-        //            rua = request.rua,
-        //            uf = request.uf,
-        //            usuarioCodigo = request.usuarioCodigo,
-        //            zona = request.zona,
-        //        };
-
-        //        _context.tabLugar.Add(lugar);
-        //        _context.SaveChanges();
-
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //}
-
-        //public List<LugarResponse> BuscarLugares()
-        //{
-        //    try
-        //    {
-        //        var lugares = _context.tabLugar.ToList();
-
-        //        var lugaresResponse = lugares.Select(lugar => new LugarResponse
-        //        {
-        //            codigo = lugar.codigo,
-        //            nome = lugar.nome,
-        //            dataCadastro = lugar.dataCadastro,
-        //            rua = lugar.rua,
-        //            numero = lugar.numero,
-        //            complemento = lugar.complemento,
-        //            bairro = lugar.bairro,
-        //            cidade = lugar.cidade,
-        //            cep = lugar.cep,
-        //            uf = lugar.uf,
-        //            usuarioCodigo = lugar.usuarioCodigo,
-        //            zona = lugar.zona
-        //        }).ToList();
-
-        //        return lugaresResponse;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return null;
-        //    }
-        //}
-        //public List<LugarResponse> BuscarLugaresPorZona(BuscarLugaresPorZonaRequest request)
-        //{
-        //    try
-        //    {
-        //        var lugares = _context.tabLugar.ToList();
-
-        //        var lugaresResponse = lugares.Where(c => c.zona == request.nomeZona).Select(lugar => new LugarResponse
-        //        {
-        //            codigo = lugar.codigo,
-        //            nome = lugar.nome,
-        //            dataCadastro = lugar.dataCadastro,
-        //            rua = lugar.rua,
-        //            numero = lugar.numero,
-        //            complemento = lugar.complemento,
-        //            bairro = lugar.bairro,
-        //            cidade = lugar.cidade,
-        //            cep = lugar.cep,
-        //            uf = lugar.uf,
-        //            usuarioCodigo = lugar.usuarioCodigo,
-        //            zona = lugar.zona
-        //        }).ToList();
-
-        //        return lugaresResponse;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return null;
-        //    }
-        //}
-        #endregion
     }
 }
