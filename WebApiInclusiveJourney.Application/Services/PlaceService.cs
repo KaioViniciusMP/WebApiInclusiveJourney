@@ -80,6 +80,8 @@ namespace WebApiInclusiveJourney.Application.Services
                     OpeningHours = zone.OpeningHours,
                     State = zone.State,
                     Street = zone.Street,
+                    IsFavorite = zone.IsFavorite,
+                    relacaoTutelado = zone.relacaoTutelado,
                     TypeAcessibility = zone.TypeAcessibility,
                     ZoneCategorie = zone.ZoneCategorie,
                     ImageUrl = s3Service.GetUrlFile(zone.ImageName, 24)
@@ -118,6 +120,8 @@ namespace WebApiInclusiveJourney.Application.Services
                     Street = zone.Street,
                     TypeAcessibility = zone.TypeAcessibility,
                     ZoneCategorie = zone.ZoneCategorie,
+                    relacaoTutelado = zone.relacaoTutelado,
+                    IsFavorite = zone.IsFavorite,
                     ImageUrl = s3Service.GetUrlFile(zone.ImageName, 24)
 
                 }).ToList();
@@ -224,8 +228,9 @@ namespace WebApiInclusiveJourney.Application.Services
                     OpeningHours = request.OpeningHours,
                     TypeAcessibility = request.TypeAcessibility,
                     ZoneCategorie = request.ZoneCategorie,
+                    ImageName = imageName,
                     IsFavorite = request.IsFavorite,
-                    ImageName = imageName
+                    relacaoTutelado = request.relacaoTutelado
                 };
 
                 _ctx.tabPlaces.Add(tabPlaces);
@@ -282,32 +287,34 @@ namespace WebApiInclusiveJourney.Application.Services
         {
             try
             {
-                var zones = _ctx.tabPlaces.Where(c => c.IsFavorite == true).ToList();
                 S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
 
-                var result = zones.Select(zone => new PlacesResponse
-                {
-                    ZoneCode = zones.FirstOrDefault().Codigo,
-                    Cep = zone.Cep,
-                    City = zone.City,
-                    Codigo = zone.Codigo,
-                    Complement = zone.Complement,
-                    Description = zone.Description,
-                    LocalAssessment = zone.LocalAssessment,
-                    NameLocal = zone.NameLocal,
-                    Neighborhood = zone.Neighborhood,
-                    NumberHome = zone.NumberHome,
-                    OpeningHours = zone.OpeningHours,
-                    State = zone.State,
-                    Street = zone.Street,
-                    IsFavorite = zone.IsFavorite,
-                    TypeAcessibility = zone.TypeAcessibility,
-                    ZoneCategorie = zone.ZoneCategorie,
-                    ImageUrl = s3Service.GetUrlFile(zone.ImageName, 24)
+                var favoritePlaces = (from tpfpc in _ctx.TabPlaceFavorite_PersonCode
+                             join tpls in _ctx.tabPlaces on tpfpc.PlacesCode equals tpls.Codigo
+                             join tp in _ctx.tabPerson on tpfpc.PersonCode equals tp.Codigo
+                             select new PlacesResponse
+                             {
+                                 ZoneCode = tpls.Codigo,
+                                 Cep = tpls.Cep,
+                                 City = tpls.City,
+                                 Codigo = tpls.Codigo,
+                                 Complement = tpls.Complement,
+                                 Description = tpls.Description,
+                                 LocalAssessment = tpls.LocalAssessment,
+                                 NameLocal = tpls.NameLocal,
+                                 Neighborhood = tpls.Neighborhood,
+                                 NumberHome = tpls.NumberHome,
+                                 OpeningHours = tpls.OpeningHours,
+                                 State = tpls.State,
+                                 Street = tpls.Street,
+                                 IsFavorite = tpls.IsFavorite,
+                                 TypeAcessibility = tpls.TypeAcessibility,
+                                 ZoneCategorie = tpls.ZoneCategorie,
+                                 relacaoTutelado = tpls.relacaoTutelado,
+                                 ImageUrl = s3Service.GetUrlFile(tpls.ImageName, 24)
+                             }).ToList();
 
-                }).ToList();
-
-                return result;
+                return favoritePlaces;
             }
             catch (Exception)
             {
@@ -340,9 +347,9 @@ namespace WebApiInclusiveJourney.Application.Services
                                  OpeningHours = tpls.OpeningHours,
                                  State = tpls.State,
                                  Street = tpls.Street,
-                                 IsFavorite = tpls.IsFavorite,
                                  TypeAcessibility = tpls.TypeAcessibility,
                                  ZoneCategorie = tpls.ZoneCategorie,
+                                 relacaoTutelado = tpls.relacaoTutelado,
                                  ImageUrl = s3Service.GetUrlFile(tpls.ImageName, 24)
                              }).ToList();
 
