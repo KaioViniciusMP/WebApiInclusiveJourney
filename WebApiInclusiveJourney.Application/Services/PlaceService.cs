@@ -62,29 +62,40 @@ namespace WebApiInclusiveJourney.Application.Services
         {
             try
             {
-                var zones = _ctx.tabPlaces.Where(c => c.ZoneCode == zoneCode).ToList();
+                //var zones = _ctx.tabPlaces.Where(c => c.ZoneCode == zoneCode).ToList();
+                var zones = (from tp in _ctx.tabPlaces
+                             join tpf_pc in _ctx.TabPlaceFavorite_PersonCode
+                             on tp.Codigo equals tpf_pc.PlacesCode into favorites // Join com a possibilidade de não ter correspondência
+                             from favorite in favorites.DefaultIfEmpty() // Permite valores nulos no resultado
+                             where tp.ZoneCode == zoneCode // Filtra pela zona
+                             select new
+                             {
+                                 TabPlaceFavorite_PersonCode = favorite, // Pode ser nulo
+                                 tabPlaces = tp
+                             }).ToList();
+
                 S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
 
                 var result = zones.Select(zone => new PlacesResponse
                 {
                     ZoneCode = zoneCode,
-                    Cep = zone.Cep,
-                    City = zone.City,
-                    Codigo = zone.Codigo,
-                    Complement = zone.Complement,
-                    Description = zone.Description,
-                    LocalAssessment = zone.LocalAssessment,
-                    NameLocal = zone.NameLocal,
-                    Neighborhood = zone.Neighborhood,
-                    NumberHome = zone.NumberHome,
-                    OpeningHours = zone.OpeningHours,
-                    State = zone.State,
-                    Street = zone.Street,
-                    IsFavorite = zone.IsFavorite,
-                    relacaoTutelado = zone.relacaoTutelado,
-                    TypeAcessibility = zone.TypeAcessibility,
-                    ZoneCategorie = zone.ZoneCategorie,
-                    ImageUrl = s3Service.GetUrlFile(zone.ImageName, 24)
+                    Cep = zone.tabPlaces.Cep,
+                    City = zone.tabPlaces.City,
+                    Codigo = zone.tabPlaces.Codigo,
+                    Complement = zone.tabPlaces.Complement,
+                    Description = zone.tabPlaces.Description,
+                    LocalAssessment = zone.tabPlaces.LocalAssessment,
+                    NameLocal = zone.tabPlaces.NameLocal,
+                    Neighborhood = zone.tabPlaces.Neighborhood,
+                    NumberHome = zone.tabPlaces.NumberHome,
+                    OpeningHours = zone.tabPlaces.OpeningHours,
+                    State = zone.tabPlaces.State,
+                    Street = zone.tabPlaces.Street,
+                    IsFavorite = zone.TabPlaceFavorite_PersonCode != null,
+                    relacaoTutelado = zone.tabPlaces.relacaoTutelado,
+                    TypeAcessibility = zone.tabPlaces.TypeAcessibility,
+                    ZoneCategorie = zone.tabPlaces.ZoneCategorie,
+                    ImageUrl = s3Service.GetUrlFile(zone.tabPlaces.ImageName, 24)
 
                 }).ToList();
 
@@ -100,29 +111,39 @@ namespace WebApiInclusiveJourney.Application.Services
         {
             try
             {
-                var zones = _ctx.tabPlaces.Where(c => c.ZoneCategorie == categorieCode).ToList();
+                //var zones = _ctx.tabPlaces.Where(c => c.ZoneCategorie == categorieCode).ToList();
+                var zones = (from tp in _ctx.tabPlaces
+                             join tpf_pc in _ctx.TabPlaceFavorite_PersonCode
+                             on tp.Codigo equals tpf_pc.PlacesCode into favorites // Join com a possibilidade de não ter correspondência
+                             from favorite in favorites.DefaultIfEmpty() // Permite valores nulos no resultado
+                             where tp.ZoneCategorie == categorieCode // Filtra pela zona
+                             select new
+                             {
+                                 TabPlaceFavorite_PersonCode = favorite, // Pode ser nulo
+                                 tabPlaces = tp
+                             }).ToList();
                 S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
 
                 var result = zones.Select(zone => new PlacesResponse
                 {
                     ZoneCode = categorieCode,
-                    Cep = zone.Cep,
-                    City = zone.City,
-                    Codigo = zone.Codigo,
-                    Complement = zone.Complement,
-                    Description = zone.Description,
-                    LocalAssessment = zone.LocalAssessment,
-                    NameLocal = zone.NameLocal,
-                    Neighborhood = zone.Neighborhood,
-                    NumberHome = zone.NumberHome,
-                    OpeningHours = zone.OpeningHours,
-                    State = zone.State,
-                    Street = zone.Street,
-                    TypeAcessibility = zone.TypeAcessibility,
-                    ZoneCategorie = zone.ZoneCategorie,
-                    relacaoTutelado = zone.relacaoTutelado,
-                    IsFavorite = zone.IsFavorite,
-                    ImageUrl = s3Service.GetUrlFile(zone.ImageName, 24)
+                    Cep = zone.tabPlaces.Cep,
+                    City = zone.tabPlaces.City,
+                    Codigo = zone.tabPlaces.Codigo,
+                    Complement = zone.tabPlaces.Complement,
+                    Description = zone.tabPlaces.Description,
+                    LocalAssessment = zone.tabPlaces.LocalAssessment,
+                    NameLocal = zone.tabPlaces.NameLocal,
+                    Neighborhood = zone.tabPlaces.Neighborhood,
+                    NumberHome = zone.tabPlaces.NumberHome,
+                    OpeningHours = zone.tabPlaces.OpeningHours,
+                    State = zone.tabPlaces.State,
+                    Street = zone.tabPlaces.Street,
+                    IsFavorite = zone.TabPlaceFavorite_PersonCode != null,
+                    relacaoTutelado = zone.tabPlaces.relacaoTutelado,
+                    TypeAcessibility = zone.tabPlaces.TypeAcessibility,
+                    ZoneCategorie = zone.tabPlaces.ZoneCategorie,
+                    ImageUrl = s3Service.GetUrlFile(zone.tabPlaces.ImageName, 24)
 
                 }).ToList();
 
