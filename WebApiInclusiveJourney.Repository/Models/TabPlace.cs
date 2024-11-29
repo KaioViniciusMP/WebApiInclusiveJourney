@@ -23,7 +23,6 @@ namespace WebApiInclusiveJourney.Repository.Models
         public string LocalAssessment { get; set; }
         public string Description { get; set; }
         public string TypeAcessibility { get; set; }
-        public string relacaoTutelado { get; set; }
         public int ZoneCode { get; set; }
         public int ZoneCategorie { get; set; }
         public bool IsFavorite { get; set; }

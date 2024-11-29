@@ -27,5 +27,6 @@ namespace WebApiInclusiveJourney.Application.DTO.Response
         public string Username { get; set; }
         public string UserDescription { get; set; }
         public string Avatar { get; set; }
+        public string relacaoTutelado { get; set; }
     }
 }

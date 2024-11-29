@@ -92,7 +92,6 @@ namespace WebApiInclusiveJourney.Application.Services
                     State = zone.tabPlaces.State,
                     Street = zone.tabPlaces.Street,
                     IsFavorite = zone.TabPlaceFavorite_PersonCode != null,
-                    relacaoTutelado = zone.tabPlaces.relacaoTutelado,
                     TypeAcessibility = zone.tabPlaces.TypeAcessibility,
                     ZoneCategorie = zone.tabPlaces.ZoneCategorie,
                     ImageUrl = s3Service.GetUrlFile(zone.tabPlaces.ImageName, 24)
@@ -140,7 +139,6 @@ namespace WebApiInclusiveJourney.Application.Services
                     State = zone.tabPlaces.State,
                     Street = zone.tabPlaces.Street,
                     IsFavorite = zone.TabPlaceFavorite_PersonCode != null,
-                    relacaoTutelado = zone.tabPlaces.relacaoTutelado,
                     TypeAcessibility = zone.tabPlaces.TypeAcessibility,
                     ZoneCategorie = zone.tabPlaces.ZoneCategorie,
                     ImageUrl = s3Service.GetUrlFile(zone.tabPlaces.ImageName, 24)
@@ -251,7 +249,6 @@ namespace WebApiInclusiveJourney.Application.Services
                     ZoneCategorie = request.ZoneCategorie,
                     ImageName = imageName,
                     IsFavorite = request.IsFavorite,
-                    relacaoTutelado = request.relacaoTutelado
                 };
 
                 _ctx.tabPlaces.Add(tabPlaces);
@@ -331,7 +328,6 @@ namespace WebApiInclusiveJourney.Application.Services
                                  IsFavorite = tpls.IsFavorite,
                                  TypeAcessibility = tpls.TypeAcessibility,
                                  ZoneCategorie = tpls.ZoneCategorie,
-                                 relacaoTutelado = tpls.relacaoTutelado,
                                  ImageUrl = s3Service.GetUrlFile(tpls.ImageName, 24)
                              }).ToList();
 
@@ -370,7 +366,6 @@ namespace WebApiInclusiveJourney.Application.Services
                                  Street = tpls.Street,
                                  TypeAcessibility = tpls.TypeAcessibility,
                                  ZoneCategorie = tpls.ZoneCategorie,
-                                 relacaoTutelado = tpls.relacaoTutelado,
                                  ImageUrl = s3Service.GetUrlFile(tpls.ImageName, 24)
                              }).ToList();
 

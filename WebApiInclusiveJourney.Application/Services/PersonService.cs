@@ -42,7 +42,8 @@ namespace WebApiInclusiveJourney.Application.Services
                     State = request.State,
                     Username = request.Username,
                     UserDescription = request.UserDescription,
-                    Avatar = request.Avatar
+                    Avatar = request.Avatar,
+                    relacaoTutelado = request.relacaoTutelado
                 };
 
                 _ctx.tabPerson.Add(person);
@@ -67,7 +68,10 @@ namespace WebApiInclusiveJourney.Application.Services
                     State = person.State,
                     Username = person.Username,
                     UserDescription = person.UserDescription,
-                    Avatar = person.Avatar
+                    Avatar = person.Avatar,
+                    relacaoTutelado =person.relacaoTutelado,
+                    Password = person.Password, 
+                    
                 };
 
                 return response;
@@ -104,7 +108,8 @@ namespace WebApiInclusiveJourney.Application.Services
                                                    State = person.State ?? string.Empty,
                                                    Username = person.Username ?? string.Empty,
                                                    UserDescription = person.UserDescription ?? string.Empty,
-                                                   Avatar = person.Avatar ?? string.Empty
+                                                   Avatar = person.Avatar ?? string.Empty,
+                                                   relacaoTutelado = person.relacaoTutelado ?? string.Empty
                                                }).FirstOrDefault(); 
 
                 return person;
@@ -141,6 +146,7 @@ namespace WebApiInclusiveJourney.Application.Services
                 person.Username = request.Username;
                 person.UserDescription = request.UserDescription;
                 person.Avatar = request.Avatar;
+                person.relacaoTutelado = request.relacaoTutelado;
 
                 _ctx.SaveChanges();
 
@@ -163,7 +169,8 @@ namespace WebApiInclusiveJourney.Application.Services
                     State = person.State,
                     Username = person.Username,
                     UserDescription = person.UserDescription,
-                    Avatar = person.Avatar
+                    Avatar = person.Avatar,
+                    relacaoTutelado = person.relacaoTutelado,
                 };
 
                 return response; 
@@ -173,86 +180,5 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null; 
             }
         }
-
-        #region 
-        //public PessoaResponse CadastrarPessoa(PessoaRequest request)
-        //{
-        //    try
-        //    {
-        //        var pessoa = new TabPessoa()
-        //        {
-        //            Bairro = request.Bairro,
-        //            Cep = request.Cep,
-        //            Cidade = request.Cidade,
-        //            Complemento = request.Complemento,
-        //            DataNascimento = request.DataNascimento,
-        //            GeneroCodigo = request.GeneroCodigo,
-        //            NomeCompleto = request.NomeCompleto,
-        //            Numero = request.Numero,
-        //            PessoaTipoCodigo = request.PessoaTipoCodigo,
-        //            TipoDeficienciaCodigo = request.TipoDeficienciaCodigo,
-        //            Uf = request.Uf,
-        //            Rua = request.Rua,
-        //            usuarioCodigo = request.usuarioCodigo
-        //        };
-
-        //        _context.tabPessoa.Add(pessoa);
-        //        _context.SaveChanges();
-
-        //        var pessoaTipo = _context.tabPessoaTipo
-        //                                  .FirstOrDefault(pt => pt.Codigo == pessoa.PessoaTipoCodigo)?.TipoPessoa;
-
-        //        var genero = _context.tabGenero
-        //                             .FirstOrDefault(g => g.Codigo == pessoa.GeneroCodigo)?.Genero;
-
-        //        var tipoDeficiencia = _context.tabTipoDeficiencia
-        //                                      .FirstOrDefault(td => td.Codigo == pessoa.TipoDeficienciaCodigo)?.Deficiencia;
-
-        //        var response = new PessoaResponse
-        //        {
-        //            Codigo = pessoa.Codigo,
-        //            NomeCompleto = pessoa.NomeCompleto,
-        //            DataNascimento = pessoa.DataNascimento,
-        //            Genero = genero,
-        //            Rua = pessoa.Rua,
-        //            Numero = pessoa.Numero,
-        //            Complemento = pessoa.Complemento,
-        //            Bairro = pessoa.Bairro,
-        //            Cidade = pessoa.Cidade,
-        //            Cep = pessoa.Cep,
-        //            Uf = pessoa.Uf,
-        //            PessoaTipo = pessoaTipo,
-        //            TipoDeficiencia = tipoDeficiencia,
-        //            usuarioCodigo = request.usuarioCodigo
-        //        };
-
-        //        return response;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return null;
-        //    }
-        //}
-        //public List<TabPessoaTipo> BuscarTipoPessoa()
-        //{
-        //    var response = _context.tabPessoaTipo.ToList();
-        //    return response;
-        //}
-        //public List<TabTipoDeficiencia> BuscarDeficiencia()
-        //{
-        //    var response = _context.tabTipoDeficiencia.ToList();
-        //    return response;
-        //}
-        //public List<TabPessoa> BuscarPessoas()
-        //{
-        //    var response = _context.tabPessoa.ToList();
-        //    return response;
-        //}
-        //public List<TabGenero> BuscarGeneros()
-        //{
-        //    var response = _context.tabGenero.ToList();
-        //    return response;
-        //}
-        #endregion
     }
 }
