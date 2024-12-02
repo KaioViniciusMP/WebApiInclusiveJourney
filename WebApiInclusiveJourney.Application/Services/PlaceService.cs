@@ -345,10 +345,12 @@ namespace WebApiInclusiveJourney.Application.Services
             {
                 S3Service s3Service = new S3Service("ImagePlacesInclusiveJourney");
 
-                var zones = (from tpfpc in _ctx.TabPlaceFavorite_PersonCode
-                             join tpls in _ctx.tabPlaces on tpfpc.PlacesCode equals tpls.Codigo
-                             join tp in _ctx.tabPerson on tpfpc.PersonCode equals tp.Codigo
-                             where tpfpc.PersonCode == request.PersonCode
+                var zones = (from tpls in _ctx.tabPlaces
+                             join tpfpc in _ctx.TabPlaceFavorite_PersonCode
+                                 on new { PlaceCode = tpls.Codigo, PersonCode = request.PersonCode }
+                                 equals new { PlaceCode = tpfpc.PlacesCode, PersonCode = tpfpc.PersonCode }
+                                 into favorites // Left join
+                             from favorite in favorites.DefaultIfEmpty()
                              select new PlacesResponse
                              {
                                  ZoneCode = tpls.Codigo,
@@ -364,6 +366,7 @@ namespace WebApiInclusiveJourney.Application.Services
                                  OpeningHours = tpls.OpeningHours,
                                  State = tpls.State,
                                  Street = tpls.Street,
+                                 IsFavorite = favorite != null, // true se houver registro na tabela auxiliar
                                  TypeAcessibility = tpls.TypeAcessibility,
                                  ZoneCategorie = tpls.ZoneCategorie,
                                  ImageUrl = s3Service.GetUrlFile(tpls.ImageName, 24)
@@ -376,5 +379,6 @@ namespace WebApiInclusiveJourney.Application.Services
                 return null;
             }
         }
+
     }
 }
